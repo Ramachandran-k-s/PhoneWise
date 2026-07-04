@@ -45,6 +45,24 @@ scaler = StandardScaler()
 
 X_scaled = scaler.fit_transform(X)
 
+# Feature Weights
+weights = [
+    5,  # price
+    2,  # 5G
+    3,  # battery
+    2,  # fast charging
+    4,  # RAM
+    4,  # Storage
+    2,  # Refresh Rate
+    3,  # Rear Camera
+    1,  # Front Camera
+    1,  # Screen Size
+    3,  # Processor
+    2   # OS
+]
+
+X_scaled = X_scaled * weights
+
 # -------------------------
 # Train KNN Model
 # -------------------------
@@ -62,5 +80,6 @@ joblib.dump(knn, "knn_model.pkl")
 joblib.dump(scaler, "scaler.pkl")
 joblib.dump(processor_encoder, "processor_encoder.pkl")
 joblib.dump(os_encoder, "os_encoder.pkl")
+joblib.dump(weights, "weights.pkl")
 
 print("✅ Model trained successfully!")
