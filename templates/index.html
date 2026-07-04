@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PhoneWise</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<div class="container">
+
+    <div class="header">
+        <h1>📱 PhoneWise</h1>
+        <p>Find the perfect smartphone using Machine Learning</p>
+    </div>
+
+    <form action="/recommend" method="POST">
+
+        <div class="grid">
+
+            <div class="input-group">
+                <label>Budget (₹)</label>
+                <input type="number" name="price" required>
+            </div>
+
+            <div class="input-group">
+                <label>5G</label>
+                <select name="is5g">
+                    <option value="1">Yes</option>
+                    <option value="0">No</option>
+                </select>
+            </div>
+
+            <div class="input-group">
+                <label>Battery (mAh)</label>
+                <input type="number" name="battery" value="5000">
+            </div>
+
+            <div class="input-group">
+                <label>Fast Charging (W)</label>
+                <input type="number" name="fast_charging" value="67">
+            </div>
+
+            <div class="input-group">
+                <label>RAM (GB)</label>
+                <select name="ram">
+                    <option>4</option>
+                    <option>6</option>
+                    <option selected>8</option>
+                    <option>12</option>
+                    <option>16</option>
+                </select>
+            </div>
+
+            <div class="input-group">
+                <label>Storage (GB)</label>
+                <select name="storage">
+                    <option>64</option>
+                    <option selected>128</option>
+                    <option>256</option>
+                    <option>512</option>
+                </select>
+            </div>
+
+            <div class="input-group">
+                <label>Refresh Rate</label>
+                <select name="refresh_rate">
+                    <option>60</option>
+                    <option>90</option>
+                    <option selected>120</option>
+                    <option>144</option>
+                </select>
+            </div>
+
+            <div class="input-group">
+                <label>Rear Camera (MP)</label>
+                <input type="number" name="rear_camera" value="50">
+            </div>
+
+            <div class="input-group">
+                <label>Front Camera (MP)</label>
+                <input type="number" name="front_camera" value="16">
+            </div>
+
+            <div class="input-group">
+                <label>Screen Size</label>
+                <input type="number" step="0.1" name="screen_size" value="6.6">
+            </div>
+
+            <div class="input-group">
+                <label>Processor</label>
+                <select name="processor">
+                    <option>snapdragon</option>
+                    <option>dimensity</option>
+                    <option>exynos</option>
+                    <option>bionic</option>
+                    <option>helio</option>
+                    <option>google</option>
+                    <option>kirin</option>
+                    <option>unisoc</option>
+                </select>
+            </div>
+
+            <div class="input-group">
+                <label>Operating System</label>
+                <select name="os">
+                    <option>android</option>
+                    <option>ios</option>
+                    <option>other</option>
+                </select>
+            </div>
+
+        </div>
+
+        <button class="btn" type="submit">
+            🔍 Recommend Phones
+        </button>
+
+    </form>
+
+    {% if phones %}
+
+    <div class="results">
+
+        <h2>Top Recommendations</h2>
+
+        {% for phone in phones %}
+
+        <div class="card">
+
+            <h3>{{ phone.model }}</h3>
+
+            <p><strong>Brand:</strong> {{ phone.brand_name }}</p>
+
+            <p><strong>Price:</strong> ₹{{ phone.price }}</p>
+
+            <p><strong>Rating:</strong> ⭐ {{ phone.avg_rating }}</p>
+
+            <p><strong>RAM:</strong> {{ phone.ram_capacity }} GB</p>
+
+            <p><strong>Storage:</strong> {{ phone.internal_memory }} GB</p>
+
+            <p><strong>Battery:</strong> {{ phone.battery_capacity }} mAh</p>
+
+            <p><strong>Processor:</strong> {{ phone.processor_brand }}</p>
+
+            <p><strong>Rear Camera:</strong> {{ phone.primary_camera_rear }} MP</p>
+
+            <p><strong>5G:</strong>
+                {% if phone["5G_or_not"] == 1 %}
+                    ✅ Yes
+                {% else %}
+                    ❌ No
+                {% endif %}
+            </p>
+
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+    {% endif %}
+
+</div>
+
+</body>
+</html>
